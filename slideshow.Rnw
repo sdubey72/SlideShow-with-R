@@ -1,8 +1,9 @@
 \documentclass{beamer}
-
+\usetheme{bergen}
+\usecolortheme{albatross}
 \begin{document}
 
-\title{comparison Barplots}
+\title{Comparison Barplots}
 
 \author{Shraddha Dubey}
 
@@ -140,25 +141,12 @@
       group_by(word)%>%
       summarize(count=n(),sentiment=first(sentiment))%>%
       arrange(count)%>%
-      top_n(8,wt=count)
+      top_n(10,wt=count)
 
     drac_pos$word<-factor(drac_pos$word,level=drac_pos$word)
-    drac_pos[4:6,]
+    drac_pos[1:10,]
     @
-  
-\end{frame}
 
-\section{Graph of Positive Darcula Words}
-
-\begin{frame}[fragile]
-
-  \frametitle{Graph of Positive Darcula Words}
-    <<>>=
-    ggplot()+
-      geom_bar(data = drac_pos,aes(x=word,y=count),stat='identity')+
-      coord_flip()
-    @
-  
 \end{frame}
 
 \section{Negative Darcula Words}
@@ -173,24 +161,66 @@
       summarize(count=n(),sentiment=first(sentiment))%>%
       arrange(count)%>%
       filter(word!='miss')%>%
-      top_n(8,wt=count)
+      top_n(10,wt=count)
     drac_neg$word<-factor(drac_neg$word,level=drac_neg$word)
-    drac_neg[1:4,]
+    drac_neg[1:10,]
     
     @
-  
+
 \end{frame}
 
 \section{Graph of Negative Darcula Words}
 
-\begin{frame}[fragile]
+\begin{frame}[fragile,allowframebreaks]
 
   \frametitle{Graph of Negative Darcula Words}
-    <<>>=
+    <<fig.height=5>>=
     ggplot()+
-      geom_bar(data = drac_neg,aes(x=word,y=count),stat='identity')+
+      geom_bar(data = drac_neg,aes(x=word,y=count)
+               ,stat='identity')+
       coord_flip()
     @
+  
+\end{frame}
+
+
+\section{Graph of Positive Darcula Words}
+
+\begin{frame}[fragile,allowframebreaks]
+
+  \frametitle{Graph of Positive Darcula Words}
+    <<fig.height=5>>=
+    ggplot()+
+      geom_bar(data = drac_pos,aes(x=word,y=count)
+               ,stat='identity')+
+      coord_flip()
+    @
+  
+\end{frame}
+
+\section{comparision Plot for Positive and negative words}
+
+\begin{frame}[fragile,allowframebreaks]
+
+  \frametitle{comparision Plot for Positive and negative words}
+    <<>>=
+    drac_compare<-rbind(drac_pos,drac_neg)
+    compPlot<-ggplot()+
+      geom_bar(data=drac_compare,aes(x=word,
+                                     y=count,
+                                     fill=sentiment,
+                                     color=sentiment),
+               stat = 'identity')+
+      facet_wrap(~sentiment,scales = 'free_y')+
+      scale_fill_manual(values=c('green','yellow'))+
+      scale_color_manual(values = c('red','pink')) 
+    @
+
+\framebreak
+<<fig.height=5>>=
+compPlot
+@
+
   
 \end{frame}
 \end{document}
