@@ -5,11 +5,12 @@
 \begin{alltt}
 \hlstd{drac_compare}\hlkwb{<-}\hlkwd{rbind}\hlstd{(drac_pos,drac_neg)}
 \hlstd{compPlot}\hlkwb{<-}\hlkwd{ggplot}\hlstd{()}\hlopt{+}
-  \hlkwd{geom_bar}\hlstd{(}\hlkwc{data}\hlstd{=drac_compare,}\hlkwd{aes}\hlstd{(}\hlkwc{x}\hlstd{=word,}
-                                 \hlkwc{y}\hlstd{=count,}
-                                 \hlkwc{fill}\hlstd{=sentiment,}
-                                 \hlkwc{color}\hlstd{=sentiment),}
+  \hlkwd{geom_bar}\hlstd{(}\hlkwc{data}\hlstd{=drac_compare,}
+           \hlkwd{aes}\hlstd{(}\hlkwc{x}\hlstd{=word,}\hlkwc{y}\hlstd{=count,}
+               \hlkwc{fill}\hlstd{=sentiment,}
+               \hlkwc{color}\hlstd{=sentiment),}
            \hlkwc{stat} \hlstd{=} \hlstr{'identity'}\hlstd{)}\hlopt{+}
+  \hlkwd{coord_flip}\hlstd{()}\hlopt{+}
   \hlkwd{facet_wrap}\hlstd{(}\hlopt{~}\hlstd{sentiment,}\hlkwc{scales} \hlstd{=} \hlstr{'free_y'}\hlstd{)}\hlopt{+}
   \hlkwd{scale_fill_manual}\hlstd{(}\hlkwc{values}\hlstd{=}\hlkwd{c}\hlstd{(}\hlstr{'green'}\hlstd{,}\hlstr{'yellow'}\hlstd{))}\hlopt{+}
   \hlkwd{scale_color_manual}\hlstd{(}\hlkwc{values} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{'red'}\hlstd{,}\hlstr{'pink'}\hlstd{))}
@@ -19,11 +20,7 @@
 
 \framebreak
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{compPlot}
-\end{alltt}
-\end{kframe}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-16-1}
 
 \end{knitrout}

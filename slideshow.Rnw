@@ -1,6 +1,6 @@
 \documentclass{beamer}
-\usetheme{bergen}
-\usecolortheme{albatross}
+\usetheme{Montpellier}
+\usecolortheme{beaver}
 \begin{document}
 
 \title{Comparison Barplots}
@@ -144,7 +144,7 @@
       top_n(10,wt=count)
 
     drac_pos$word<-factor(drac_pos$word,level=drac_pos$word)
-    drac_pos[1:10,]
+    drac_pos[1:5,]
     @
 
 \end{frame}
@@ -162,8 +162,8 @@
       arrange(count)%>%
       filter(word!='miss')%>%
       top_n(10,wt=count)
-    drac_neg$word<-factor(drac_neg$word,level=drac_neg$word)
-    drac_neg[1:10,]
+    #drac_neg$word<-factor(drac_neg$word,level=drac_neg$word)
+    drac_neg[1:5,]
     
     @
 
@@ -206,18 +206,19 @@
     <<>>=
     drac_compare<-rbind(drac_pos,drac_neg)
     compPlot<-ggplot()+
-      geom_bar(data=drac_compare,aes(x=word,
-                                     y=count,
-                                     fill=sentiment,
-                                     color=sentiment),
+      geom_bar(data=drac_compare,
+               aes(x=word,y=count,
+                   fill=sentiment,
+                   color=sentiment),
                stat = 'identity')+
+      coord_flip()+
       facet_wrap(~sentiment,scales = 'free_y')+
       scale_fill_manual(values=c('green','yellow'))+
       scale_color_manual(values = c('red','pink')) 
     @
 
 \framebreak
-<<fig.height=5>>=
+<<fig.height=5,echo=FALSE>>=
 compPlot
 @
 

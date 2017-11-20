@@ -49,8 +49,8 @@
 \newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
 
 \usepackage{alltt}
-\usetheme{bergen}
-\usecolortheme{albatross}
+\usetheme{Montpellier}
+\usecolortheme{beaver}
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \begin{document}
 
@@ -291,22 +291,17 @@
   \hlkwd{top_n}\hlstd{(}\hlnum{10}\hlstd{,}\hlkwc{wt}\hlstd{=count)}
 
 \hlstd{drac_pos}\hlopt{$}\hlstd{word}\hlkwb{<-}\hlkwd{factor}\hlstd{(drac_pos}\hlopt{$}\hlstd{word,}\hlkwc{level}\hlstd{=drac_pos}\hlopt{$}\hlstd{word)}
-\hlstd{drac_pos[}\hlnum{1}\hlopt{:}\hlnum{10}\hlstd{,]}
+\hlstd{drac_pos[}\hlnum{1}\hlopt{:}\hlnum{5}\hlstd{,]}
 \end{alltt}
 \begin{verbatim}
-## # A tibble: 10 x 3
-##      word count sentiment
-##    <fctr> <int>     <chr>
-##  1  sweet    66  positive
-##  2  ready    71  positive
-##  3 better    77  positive
-##  4   love    84  positive
-##  5  right    99  positive
-##  6   work   146  positive
-##  7  great   183  positive
-##  8   well   245  positive
-##  9   good   258  positive
-## 10   like   292  positive
+## # A tibble: 5 x 3
+##     word count sentiment
+##   <fctr> <int>     <chr>
+## 1  sweet    66  positive
+## 2  ready    71  positive
+## 3 better    77  positive
+## 4   love    84  positive
+## 5  right    99  positive
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -328,23 +323,18 @@
   \hlkwd{arrange}\hlstd{(count)}\hlopt{%>%}
   \hlkwd{filter}\hlstd{(word}\hlopt{!=}\hlstr{'miss'}\hlstd{)}\hlopt{%>%}
   \hlkwd{top_n}\hlstd{(}\hlnum{10}\hlstd{,}\hlkwc{wt}\hlstd{=count)}
-\hlstd{drac_neg}\hlopt{$}\hlstd{word}\hlkwb{<-}\hlkwd{factor}\hlstd{(drac_neg}\hlopt{$}\hlstd{word,}\hlkwc{level}\hlstd{=drac_neg}\hlopt{$}\hlstd{word)}
-\hlstd{drac_neg[}\hlnum{1}\hlopt{:}\hlnum{10}\hlstd{,]}
+\hlcom{#drac_neg$word<-factor(drac_neg$word,level=drac_neg$word)}
+\hlstd{drac_neg[}\hlnum{1}\hlopt{:}\hlnum{5}\hlstd{,]}
 \end{alltt}
 \begin{verbatim}
-## # A tibble: 10 x 3
-##        word count sentiment
-##      <fctr> <int>     <chr>
-##  1     hard    49  negative
-##  2  trouble    53  negative
-##  3     fell    59  negative
-##  4     dark    77  negative
-##  5  strange    90  negative
-##  6    death    94  negative
-##  7 terrible   100  negative
-##  8     dead   109  negative
-##  9     fear   137  negative
-## 10     poor   193  negative
+## # A tibble: 5 x 3
+##      word count sentiment
+##     <chr> <int>     <chr>
+## 1    hard    49  negative
+## 2 trouble    53  negative
+## 3    fell    59  negative
+## 4    dark    77  negative
+## 5 strange    90  negative
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -402,11 +392,12 @@
 \begin{alltt}
 \hlstd{drac_compare}\hlkwb{<-}\hlkwd{rbind}\hlstd{(drac_pos,drac_neg)}
 \hlstd{compPlot}\hlkwb{<-}\hlkwd{ggplot}\hlstd{()}\hlopt{+}
-  \hlkwd{geom_bar}\hlstd{(}\hlkwc{data}\hlstd{=drac_compare,}\hlkwd{aes}\hlstd{(}\hlkwc{x}\hlstd{=word,}
-                                 \hlkwc{y}\hlstd{=count,}
-                                 \hlkwc{fill}\hlstd{=sentiment,}
-                                 \hlkwc{color}\hlstd{=sentiment),}
+  \hlkwd{geom_bar}\hlstd{(}\hlkwc{data}\hlstd{=drac_compare,}
+           \hlkwd{aes}\hlstd{(}\hlkwc{x}\hlstd{=word,}\hlkwc{y}\hlstd{=count,}
+               \hlkwc{fill}\hlstd{=sentiment,}
+               \hlkwc{color}\hlstd{=sentiment),}
            \hlkwc{stat} \hlstd{=} \hlstr{'identity'}\hlstd{)}\hlopt{+}
+  \hlkwd{coord_flip}\hlstd{()}\hlopt{+}
   \hlkwd{facet_wrap}\hlstd{(}\hlopt{~}\hlstd{sentiment,}\hlkwc{scales} \hlstd{=} \hlstr{'free_y'}\hlstd{)}\hlopt{+}
   \hlkwd{scale_fill_manual}\hlstd{(}\hlkwc{values}\hlstd{=}\hlkwd{c}\hlstd{(}\hlstr{'green'}\hlstd{,}\hlstr{'yellow'}\hlstd{))}\hlopt{+}
   \hlkwd{scale_color_manual}\hlstd{(}\hlkwc{values} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{'red'}\hlstd{,}\hlstr{'pink'}\hlstd{))}
@@ -416,11 +407,7 @@
 
 \framebreak
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlstd{compPlot}
-\end{alltt}
-\end{kframe}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-16-1} 
 
 \end{knitrout}
