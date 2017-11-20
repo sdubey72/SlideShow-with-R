@@ -1,0 +1,196 @@
+\documentclass{beamer}
+
+\begin{document}
+
+\title{comparison Barplots}
+
+\author{Shraddha Dubey}
+
+\begin{frame}
+
+  \titlepage
+
+\end{frame}
+
+\begin{frame}
+
+  \frametitle{Outline}
+    \tableofcontents
+
+\end{frame}
+
+\section{install and load libraries}
+
+\begin{frame}[fragile] 
+  \frametitle{install and load libraries}
+    \begin{itemize}
+      \item<1->
+        <<warning=FALSE,message=FALSE>>=
+        library(dplyr)
+        @
+    
+    \end{itemize}
+    \begin{itemize}
+      \item<2->
+        <<warning=FALSE,message=FALSE>>=
+        library(tidytext)
+        @
+    
+    \end{itemize}
+    \begin{itemize}
+      \item<3->
+        <<warning=FALSE,message=FALSE>>=
+        library(ggplot2)
+        @
+    
+    \end{itemize}
+    \begin{itemize}
+      \item<4->
+        <<warning=FALSE,message=FALSE>>=
+        library(gutenbergr)
+        @
+    
+    \end{itemize}
+    
+    \begin{itemize}
+      \item<5->
+        <<warning=FALSE,message=FALSE>>=
+        library(stringr)
+        @
+    
+    \end{itemize}
+
+\end{frame}
+
+\section{Access Project Gutenbergr}
+
+\begin{frame}[fragile] 
+
+  \frametitle{Access Project Gutenbergr}
+    <<>>=
+    df<-gutenberg_works(str_detect(title,'Dracula'))
+    df$gutenberg_id
+    df$title
+        
+    @
+  
+\end{frame}
+
+\section{Download Dracula}
+
+\begin{frame}[fragile]
+
+  \frametitle{Download Dracula}
+    <<>>=
+    drac<-gutenberg_download(345)
+    colnames(drac)
+    substr(drac$text[500],1,21)
+    @
+  
+\end{frame}
+
+\section{Unpack the words}
+
+\begin{frame}[fragile]
+
+  \frametitle{Unpack the words}
+    <<>>=
+    drac_words<-drac%>% 
+      unnest_tokens(word,text)
+    colnames(drac_words)
+    drac_words$word[498:500]
+    @
+  
+\end{frame}
+
+\section{The Bing Lexicon}
+
+\begin{frame}[fragile]
+
+  \frametitle{The Bing Lexicon}
+    <<>>=
+    bing<-get_sentiments('bing')
+    colnames(bing)
+    bing[498:500,]
+    @
+  
+\end{frame}
+
+\section{The Inner Join}
+
+\begin{frame}[fragile]
+
+  \frametitle{The Inner Join}
+    <<>>=
+    drac_words<-inner_join(drac_words,bing)
+    drac_words$gutenberg_id<-NULL
+    drac_words[498:500,]
+    @
+  
+\end{frame}
+
+\section{Positive Darcula Words}
+
+\begin{frame}[fragile]
+
+  \frametitle{Positive Darcula Words}
+    <<>>=
+    drac_pos<-drac_words%>%
+      filter(sentiment=='positive')%>%
+      group_by(word)%>%
+      summarize(count=n(),sentiment=first(sentiment))%>%
+      arrange(count)%>%
+      top_n(8,wt=count)
+
+    drac_pos$word<-factor(drac_pos$word,level=drac_pos$word)
+    drac_pos[4:6,]
+    @
+  
+\end{frame}
+
+\section{Graph of Positive Darcula Words}
+
+\begin{frame}[fragile]
+
+  \frametitle{Graph of Positive Darcula Words}
+    <<>>=
+    ggplot()+
+      geom_bar(data = drac_pos,aes(x=word,y=count),stat='identity')+
+      coord_flip()
+    @
+  
+\end{frame}
+
+\section{Negative Darcula Words}
+
+\begin{frame}[fragile]
+
+  \frametitle{Negative Darcula Words}
+    <<>>=
+    drac_neg<-drac_words%>%
+      filter(sentiment=='negative')%>%
+      group_by(word)%>%
+      summarize(count=n(),sentiment=first(sentiment))%>%
+      arrange(count)%>%
+      filter(word!='miss')%>%
+      top_n(8,wt=count)
+    drac_neg$word<-factor(drac_neg$word,level=drac_neg$word)
+    drac_neg[1:4,]
+    
+    @
+  
+\end{frame}
+
+\section{Graph of Negative Darcula Words}
+
+\begin{frame}[fragile]
+
+  \frametitle{Graph of Negative Darcula Words}
+    <<>>=
+    ggplot()+
+      geom_bar(data = drac_neg,aes(x=word,y=count),stat='identity')+
+      coord_flip()
+    @
+  
+\end{frame}
+\end{document}

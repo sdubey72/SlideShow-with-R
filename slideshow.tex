@@ -1,0 +1,376 @@
+\documentclass{beamer}\usepackage[]{graphicx}\usepackage[]{color}
+%% maxwidth is the original width if it is less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+
+\title{comparison Barplots}
+
+\author{Shraddha Dubey}
+
+\begin{frame}
+
+  \titlepage
+
+\end{frame}
+
+\begin{frame}
+
+  \frametitle{Outline}
+    \tableofcontents
+
+\end{frame}
+
+\section{install and load libraries}
+
+\begin{frame}[fragile] 
+  \frametitle{install and load libraries}
+    \begin{itemize}
+      \item<1->
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{library}\hlstd{(dplyr)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+    
+    \end{itemize}
+    \begin{itemize}
+      \item<2->
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{library}\hlstd{(tidytext)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+    
+    \end{itemize}
+    \begin{itemize}
+      \item<3->
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{library}\hlstd{(ggplot2)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+    
+    \end{itemize}
+    \begin{itemize}
+      \item<4->
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{library}\hlstd{(gutenbergr)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+    
+    \end{itemize}
+    
+    \begin{itemize}
+      \item<5->
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{library}\hlstd{(stringr)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+    
+    \end{itemize}
+
+\end{frame}
+
+\section{Access Project Gutenbergr}
+
+\begin{frame}[fragile] 
+
+  \frametitle{Access Project Gutenbergr}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{df}\hlkwb{<-}\hlkwd{gutenberg_works}\hlstd{(}\hlkwd{str_detect}\hlstd{(title,}\hlstr{'Dracula'}\hlstd{))}
+\hlstd{df}\hlopt{$}\hlstd{gutenberg_id}
+\end{alltt}
+\begin{verbatim}
+## [1]   345 10150
+\end{verbatim}
+\begin{alltt}
+\hlstd{df}\hlopt{$}\hlstd{title}
+\end{alltt}
+\begin{verbatim}
+## [1] "Dracula"         "Dracula's Guest"
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+  
+\end{frame}
+
+\section{Download Dracula}
+
+\begin{frame}[fragile]
+
+  \frametitle{Download Dracula}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{drac}\hlkwb{<-}\hlkwd{gutenberg_download}\hlstd{(}\hlnum{345}\hlstd{)}
+\end{alltt}
+
+
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# Determining mirror for Project Gutenberg from http://www.gutenberg.org/robot/harvest}}
+
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# Using mirror http://aleph.gutenberg.org}}\begin{alltt}
+\hlkwd{colnames}\hlstd{(drac)}
+\end{alltt}
+\begin{verbatim}
+## [1] "gutenberg_id" "text"
+\end{verbatim}
+\begin{alltt}
+\hlkwd{substr}\hlstd{(drac}\hlopt{$}\hlstd{text[}\hlnum{500}\hlstd{],}\hlnum{1}\hlstd{,}\hlnum{21}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] "my own disappointment"
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+  
+\end{frame}
+
+\section{Unpack the words}
+
+\begin{frame}[fragile]
+
+  \frametitle{Unpack the words}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{drac_words}\hlkwb{<-}\hlstd{drac}\hlopt{%>%}
+  \hlkwd{unnest_tokens}\hlstd{(word,text)}
+\hlkwd{colnames}\hlstd{(drac_words)}
+\end{alltt}
+\begin{verbatim}
+## [1] "gutenberg_id" "word"
+\end{verbatim}
+\begin{alltt}
+\hlstd{drac_words}\hlopt{$}\hlstd{word[}\hlnum{498}\hlopt{:}\hlnum{500}\hlstd{]}
+\end{alltt}
+\begin{verbatim}
+## [1] "fail" "to"   "have"
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+  
+\end{frame}
+
+\section{The Bing Lexicon}
+
+\begin{frame}[fragile]
+
+  \frametitle{The Bing Lexicon}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{bing}\hlkwb{<-}\hlkwd{get_sentiments}\hlstd{(}\hlstr{'bing'}\hlstd{)}
+\hlkwd{colnames}\hlstd{(bing)}
+\end{alltt}
+\begin{verbatim}
+## [1] "word"      "sentiment"
+\end{verbatim}
+\begin{alltt}
+\hlstd{bing[}\hlnum{498}\hlopt{:}\hlnum{500}\hlstd{,]}
+\end{alltt}
+\begin{verbatim}
+## # A tibble: 3 x 2
+##          word sentiment
+##         <chr>     <chr>
+## 1     bereave  negative
+## 2 bereavement  negative
+## 3      bereft  negative
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+  
+\end{frame}
+
+\section{The Inner Join}
+
+\begin{frame}[fragile]
+
+  \frametitle{The Inner Join}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{drac_words}\hlkwb{<-}\hlkwd{inner_join}\hlstd{(drac_words,bing)}
+\end{alltt}
+
+
+{\ttfamily\noindent\itshape\color{messagecolor}{\#\# Joining, by = "{}word"{}}}\begin{alltt}
+\hlstd{drac_words}\hlopt{$}\hlstd{gutenberg_id}\hlkwb{<-}\hlkwa{NULL}
+\hlstd{drac_words[}\hlnum{498}\hlopt{:}\hlnum{500}\hlstd{,]}
+\end{alltt}
+\begin{verbatim}
+## # A tibble: 3 x 2
+##      word sentiment
+##     <chr>     <chr>
+## 1   great  positive
+## 2    love  positive
+## 3 crowded  negative
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+  
+\end{frame}
+
+\section{Positive Darcula Words}
+
+\begin{frame}[fragile]
+
+  \frametitle{Positive Darcula Words}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{drac_pos}\hlkwb{<-}\hlstd{drac_words}\hlopt{%>%}
+  \hlkwd{filter}\hlstd{(sentiment}\hlopt{==}\hlstr{'positive'}\hlstd{)}\hlopt{%>%}
+  \hlkwd{group_by}\hlstd{(word)}\hlopt{%>%}
+  \hlkwd{summarize}\hlstd{(}\hlkwc{count}\hlstd{=}\hlkwd{n}\hlstd{(),}\hlkwc{sentiment}\hlstd{=}\hlkwd{first}\hlstd{(sentiment))}\hlopt{%>%}
+  \hlkwd{arrange}\hlstd{(count)}\hlopt{%>%}
+  \hlkwd{top_n}\hlstd{(}\hlnum{8}\hlstd{,}\hlkwc{wt}\hlstd{=count)}
+
+\hlstd{drac_pos}\hlopt{$}\hlstd{word}\hlkwb{<-}\hlkwd{factor}\hlstd{(drac_pos}\hlopt{$}\hlstd{word,}\hlkwc{level}\hlstd{=drac_pos}\hlopt{$}\hlstd{word)}
+\hlstd{drac_pos[}\hlnum{4}\hlopt{:}\hlnum{6}\hlstd{,]}
+\end{alltt}
+\begin{verbatim}
+## # A tibble: 3 x 3
+##     word count sentiment
+##   <fctr> <int>     <chr>
+## 1   work   146  positive
+## 2  great   183  positive
+## 3   well   245  positive
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+  
+\end{frame}
+
+\section{Graph of Positive Darcula Words}
+
+\begin{frame}[fragile]
+
+  \frametitle{Graph of Positive Darcula Words}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{ggplot}\hlstd{()}\hlopt{+}
+  \hlkwd{geom_bar}\hlstd{(}\hlkwc{data} \hlstd{= drac_pos,}\hlkwd{aes}\hlstd{(}\hlkwc{x}\hlstd{=word,}\hlkwc{y}\hlstd{=count),}\hlkwc{stat}\hlstd{=}\hlstr{'identity'}\hlstd{)}\hlopt{+}
+  \hlkwd{coord_flip}\hlstd{()}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-12-1} 
+
+\end{knitrout}
+  
+\end{frame}
+
+\section{Negative Darcula Words}
+
+\begin{frame}[fragile]
+
+  \frametitle{Negative Darcula Words}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{drac_neg}\hlkwb{<-}\hlstd{drac_words}\hlopt{%>%}
+  \hlkwd{filter}\hlstd{(sentiment}\hlopt{==}\hlstr{'negative'}\hlstd{)}\hlopt{%>%}
+  \hlkwd{group_by}\hlstd{(word)}\hlopt{%>%}
+  \hlkwd{summarize}\hlstd{(}\hlkwc{count}\hlstd{=}\hlkwd{n}\hlstd{(),}\hlkwc{sentiment}\hlstd{=}\hlkwd{first}\hlstd{(sentiment))}\hlopt{%>%}
+  \hlkwd{arrange}\hlstd{(count)}\hlopt{%>%}
+  \hlkwd{filter}\hlstd{(word}\hlopt{!=}\hlstr{'miss'}\hlstd{)}\hlopt{%>%}
+  \hlkwd{top_n}\hlstd{(}\hlnum{8}\hlstd{,}\hlkwc{wt}\hlstd{=count)}
+\hlstd{drac_neg}\hlopt{$}\hlstd{word}\hlkwb{<-}\hlkwd{factor}\hlstd{(drac_neg}\hlopt{$}\hlstd{word,}\hlkwc{level}\hlstd{=drac_neg}\hlopt{$}\hlstd{word)}
+\hlstd{drac_neg[}\hlnum{1}\hlopt{:}\hlnum{4}\hlstd{,]}
+\end{alltt}
+\begin{verbatim}
+## # A tibble: 4 x 3
+##      word count sentiment
+##    <fctr> <int>     <chr>
+## 1    fell    59  negative
+## 2    dark    77  negative
+## 3 strange    90  negative
+## 4   death    94  negative
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+  
+\end{frame}
+
+\section{Graph of Negative Darcula Words}
+
+\begin{frame}[fragile]
+
+  \frametitle{Graph of Negative Darcula Words}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{ggplot}\hlstd{()}\hlopt{+}
+  \hlkwd{geom_bar}\hlstd{(}\hlkwc{data} \hlstd{= drac_neg,}\hlkwd{aes}\hlstd{(}\hlkwc{x}\hlstd{=word,}\hlkwc{y}\hlstd{=count),}\hlkwc{stat}\hlstd{=}\hlstr{'identity'}\hlstd{)}\hlopt{+}
+  \hlkwd{coord_flip}\hlstd{()}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-14-1} 
+
+\end{knitrout}
+  
+\end{frame}
+\end{document}

@@ -1,0 +1,10 @@
+\beamer@sectionintoc {1}{install and load libraries}{3}{0}{1}
+\beamer@sectionintoc {2}{Access Project Gutenbergr}{8}{0}{2}
+\beamer@sectionintoc {3}{Download Dracula}{9}{0}{3}
+\beamer@sectionintoc {4}{Unpack the words}{10}{0}{4}
+\beamer@sectionintoc {5}{The Bing Lexicon}{11}{0}{5}
+\beamer@sectionintoc {6}{The Inner Join}{12}{0}{6}
+\beamer@sectionintoc {7}{Positive Darcula Words}{13}{0}{7}
+\beamer@sectionintoc {8}{Graph of Positive Darcula Words}{14}{0}{8}
+\beamer@sectionintoc {9}{Negative Darcula Words}{15}{0}{9}
+\beamer@sectionintoc {10}{Graph of Negative Darcula Words}{16}{0}{10}
